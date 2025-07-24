@@ -21,8 +21,6 @@ namespace GetAHotel.Service.Location
 
             try
             {
-               
-
                 var overPassResponse = JsonSerializer.Deserialize<OverPassResponse>(jsonResponse);
 
          
