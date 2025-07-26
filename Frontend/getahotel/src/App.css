@@ -1,47 +1,44 @@
-/* Reset básico */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  color: black;
-}
+html, body, #root { height: 100%; margin: 0; }
 
-body, html {
-  font-family: sans-serif;
-    min-height: 100%;
-  background-image: url("https://www.researchgate.net/publication/345316196/figure/fig2/AS:954354005725187@1604547134739/Google-Maps-Traffic-Layer-showing-live-traffic-in-the-Camden-Soho-Marylebone-Mayfair.ppm"); /* la imagen que tengas */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-/* Contenedor principal con flex */
-.container {
-  display: flex;
-  min-height: 100vh;
-}
-
-
-/* Contenido principal */
-main {
-  flex: 1; /* Ocupa el resto del espacio */
-  padding: 20px;
-  background-color: #fff;
-}
-
-.app {
-  position: relative;
+.layout {
   display: flex;
   height: 100vh;
 }
 
-/* fondo oscuro semitransparente detrás de la tarjeta */
+
+
+.map-wrapper {
+  flex: 1 1 auto;
+  position: relative;   /* para que el mapa se ajuste al flex */
+}
+
+
+/* overlay para la tarjeta */
 .overlay {
   position: fixed;
   inset: 0;
-  background: none;
+  background: rgba(0,0,0,.45);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+}
+
+/* App.css (o tu hoja de estilos) */
+
+/* Mover todo lo que está “arriba-izquierda” → “arriba-derecha” */
+.leaflet-top.leaflet-left {
+  left: auto;          /* quita la posición original */
+  right: 10px;         /* margen desde el borde derecho */
+  top: 10px;           /* margen desde arriba (ajusta si quieres) */
+}
+
+.app {
+  position: relative;
+  height: 100vh;          /* ← altura completa del viewport */
+}
+
+.map-wrapper {
+  height: 100%;
+  width: 100%;
 }

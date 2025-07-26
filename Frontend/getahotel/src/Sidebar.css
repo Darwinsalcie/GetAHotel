@@ -1,22 +1,28 @@
 
 
-/* FONDO DEL SIDEBAR (efecto Fluent Acrylic simplificado) */
 .sidebar {
   position: fixed;
   inset: 0 auto 0 0;
   width: 280px;
-  padding: 1rem;
+  z-index: 1000;
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(8px);
-  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  -webkit-backdrop-filter: blur(8px);
   overflow-y: auto;
+  padding: 1rem;
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, serif;
 }
 
-/* TÍTULO */
 .sidebar__title {
   margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.45);
+  border-radius: 8px;
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 500;
+  color: #111;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 /* MENSAJES */
@@ -33,46 +39,76 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 /* TARJETA SENCILLA */
+/* Tarjeta más aireada y tipografía fina */
 .sidebar-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 0.75rem;
-  background: rgba(255, 255, 255, 0.35);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  padding: 0.75rem 0.9rem;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(168, 24, 24, 0.05);
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.sidebar-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-card__name {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #111;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #222;
+  letter-spacing: 0.25px;
 }
 
 .sidebar-card__btn {
-  flex-shrink: 0;            /* no se encoje */
-  width: 80px;               /* mismo ancho para todos */
-  height: 28px;              /* misma altura */
+  flex-shrink: 0;
+  width: 82px;
+  height: 30px;
   font-size: 0.75rem;
-  padding: 0;                /* reseteamos el padding para que entre el texto centrado */
+  font-weight: 500;
   border: none;
-  border-radius: 4px;
-  background: #0078d4;
-  color: #fff;
+  border-radius: 6px;
+  background: rgb(255, 250, 190);
+  color: #3e3d3d;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background .2s ease;
   display: flex;
   align-items: center;
-  justify-content: center;   /* centra el texto dentro del botón */
-  margin-left: 5px;
+  justify-content: center;
 }
 
 .sidebar-card__btn:hover {
-  background: #005a9e;
+  opacity: 0.6;
 }
 
+/* Scrollbar personalizada y delicada */
+.sidebar::-webkit-scrollbar {
+  width: 6px;               /* barra ultra-fina */
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;  /* hereda el fondo translúcido */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(6, 49, 40, 0.25);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* Firefox */
+.sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
