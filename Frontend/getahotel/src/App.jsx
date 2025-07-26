@@ -1,20 +1,22 @@
-import { useState } from 'react'
-import { Sidebar } from './Sidebar'
-//import HotelCardList from './HotelCardList'
-
-import './App.css'
+import { useState } from 'react';
+import { Sidebar } from './Sidebar';
+import { HotelCard } from './HotelCard';   // nuevo componente
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedHotel, setSelectedHotel] = useState(null);
 
   return (
-    <>
-      <div>
-        <Sidebar></Sidebar>
-      </div>
+    <div className="app">
+      <Sidebar onSelectHotel={setSelectedHotel} />
 
-    </>
-  )
+      {selectedHotel && (
+        <div className="overlay">
+          <HotelCard hotel={selectedHotel} onClose={() => setSelectedHotel(null)} />
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;

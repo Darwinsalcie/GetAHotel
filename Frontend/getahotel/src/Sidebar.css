@@ -1,3 +1,5 @@
+
+
 /* FONDO DEL SIDEBAR (efecto Fluent Acrylic simplificado) */
 .sidebar {
   position: fixed;
@@ -5,7 +7,7 @@
   width: 280px;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
   border-right: 1px solid rgba(0, 0, 0, 0.08);
   overflow-y: auto;
 }
@@ -53,16 +55,24 @@
 }
 
 .sidebar-card__btn {
+  flex-shrink: 0;            /* no se encoje */
+  width: 80px;               /* mismo ancho para todos */
+  height: 28px;              /* misma altura */
   font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
+  padding: 0;                /* reseteamos el padding para que entre el texto centrado */
   border: none;
   border-radius: 4px;
   background: #0078d4;
   color: #fff;
   cursor: pointer;
   transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;   /* centra el texto dentro del botón */
+  margin-left: 5px;
 }
 
 .sidebar-card__btn:hover {
   background: #005a9e;
 }
+

@@ -40,7 +40,7 @@ namespace GetAHotel.Service.Location
                         Longitude = e.lon,
                         houseNumber = e.tags.ContainsKey("addr:housenumber") ? e.tags["addr:housenumber"] : null,
                         PhoneNumber = e.tags.ContainsKey("contact:phone") ? (e.tags["contact:phone"]) : 
-                                      e.tags.ContainsKey("phone")? e.tags["phone"] : "Unknown",
+                                      e.tags.ContainsKey("phone")? e.tags["phone"] : null,
                         Street = e.tags.ContainsKey("addr:street") ? e.tags["addr:street"] : null,
                         Address = e.tags.ContainsKey("addr:full") ? e.tags["addr:full"] : null,
                         City = e.tags.ContainsKey("addr:city") ? e.tags["addr:city"] : null,

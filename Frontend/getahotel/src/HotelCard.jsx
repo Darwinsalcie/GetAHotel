@@ -1,25 +1,52 @@
-export function HotelCard({hotel}){
-    return(
+import './HotelCard.css';
 
-        <article>
-        <h2>{hotel.name}</h2>
+export function HotelCard({ hotel, onClose }) {
+  return (
+    <div className="hotel-card">
+      <button className="hotel-card__close" onClick={onClose}>✕</button>
+      <h2>{hotel.name}</h2>
+      <p>
+        {hotel.street && (
+          <>
+            <span className="boldProperties">Calle:</span> {hotel.street}
+          </>
+        )}
+      </p>
 
-        <address>
-            <p>
-                {hotel.street}, {hotel.houseNumber}
-                {hotel.city}
-            </p>
-        </address>
+      <p>
+        {hotel.houseNumber && (
+          <>
+            <span className="boldProperties">Número del local:</span> {hotel.houseNumber}
+          </>
+        )}
+      </p>
 
-        <p>
-            Tel: <a href={`tel:${hotel.phoneNumber}`}>{hotel.phoneNumber}</a>
-        
-        Web: <a href={hotel.website} target="_blank" 
-        rel="noopener noreferrer">{hotel.website}</a>
-        
-        </p>
-        </article>
+      <p>
+        {hotel.phoneNumber && (
+          <>
+            <span className="boldProperties">Tel:</span> {hotel.phoneNumber}
+          </>
+        )}
+      </p>
 
+      <p>
+        {hotel.city && (
+          <>
+            <span className="boldProperties">Ciudad:</span> {hotel.city}
+          </>
+        )}
+      </p>
 
-    )
+      <p>
+        {hotel.website && (
+          <>
+            <span className="boldProperties">Sitio web:</span>{' '}
+            <a href={hotel.website} target="_blank" rel="noopener noreferrer">
+              Clic aquí para ir al sitio web
+            </a>
+          </>
+        )}
+  </p>
+    </div>
+  );
 }

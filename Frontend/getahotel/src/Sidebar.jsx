@@ -3,9 +3,10 @@ import { fetchHotelsAround } from "./services/hotelService";
 import { HotelSideBarCard } from "./HotelSideBarCard";
 import "./Sidebar.css";
 
-export function Sidebar() {
+export function Sidebar({onSelectHotel}) {
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     fetchHotelsAround({ radius: 3000, lat: 18.4707478, lon: -69.9168466 })
@@ -15,8 +16,7 @@ export function Sidebar() {
   }, []);
 
   const handleView = (hotel) => {
-    // aquí más tarde mostraremos el detalle
-    console.log("Ver detalles de", hotel.name);
+    onSelectHotel(hotel);   // en vez de console.log
   };
 
   return (

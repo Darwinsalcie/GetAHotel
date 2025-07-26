@@ -28,3 +28,20 @@ main {
   padding: 20px;
   background-color: #fff;
 }
+
+.app {
+  position: relative;
+  display: flex;
+  height: 100vh;
+}
+
+/* fondo oscuro semitransparente detrás de la tarjeta */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
