@@ -3,29 +3,43 @@ import { fetchHotelsAround } from "./services/hotelService";
 import { HotelSideBarCard } from "./HotelSideBarCard";
 import "./Sidebar.css";
 
-export function Sidebar({onSelectHotel}) {
+/**
+ * Sidebar muestra una lista de hoteles alrededor de una coordenada dada.
+ * @param {{ onSelectHotel: Function, lat: number, lon: number }} props
+ */
+export function Sidebar({ onSelectHotel, lat, lon }) {
   const [hotels, setHotels] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [coords, setCoords] = useState(null);
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchHotelsAround({ radius: 3000, lat: 18.4707478, lon: -69.9168466 })
-      .then(setHotels)
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, []);
+    if (lat == null || lon == null) {
+      // No se tienen coordenadas, limpiamos lista
+      setHotels([]);
+      return;
+    }
 
-  const handleView = (hotel) => {
-    onSelectHotel(hotel);   // en vez de console.log
-  };
+    setLoading(true);
+    setError(null);
+
+    fetchHotelsAround({ radius: 3000, lat, lon })
+      .then((list) => setHotels(list))
+      .catch((err) => {
+        console.error(err);
+        setError('Error al cargar hoteles');
+      })
+      .finally(() => setLoading(false));
+  }, [lat, lon]);
+
+  const handleView = (hotel) => onSelectHotel(hotel);
 
   return (
     <aside className="sidebar">
       <h2 className="sidebar__title">Hoteles cercanos</h2>
 
       {loading && <p className="sidebar__msg">Cargando hoteles…</p>}
-      {!loading && hotels.length === 0 && (
+      {error && <p className="sidebar__msg sidebar__error">{error}</p>}
+      {!loading && !error && hotels.length === 0 && (
         <p className="sidebar__msg">No hay hoteles cerca</p>
       )}
 
