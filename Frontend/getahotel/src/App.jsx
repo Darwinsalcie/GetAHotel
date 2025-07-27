@@ -21,6 +21,7 @@ export default function App() {
           <HotelCard hotel={selectedHotel} onClose={() => setSelectedHotel(null)} />
         </div>
       )}
+      
     </div>
   );
 }

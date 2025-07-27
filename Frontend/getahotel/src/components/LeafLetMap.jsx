@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';   // estilos base de Leaflet
 
 export default function LeafletMap() {
   return (
+    <>
     <MapContainer
       center={[40.7128, -74.006]} // NYC
       zoom={13}
@@ -14,5 +15,8 @@ export default function LeafletMap() {
         attribution='&copy; OpenStreetMap contributors'
       />
     </MapContainer>
+
+
+    </>
   );
 }

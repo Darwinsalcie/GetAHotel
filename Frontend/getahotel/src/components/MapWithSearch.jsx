@@ -1,46 +1,64 @@
 // src/components/MapWithSearch.jsx
-import { MapContainer, TileLayer } from 'react-leaflet';
+import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
-import { useMap } from 'react-leaflet';
 import { useEffect } from 'react';
+import L from 'leaflet';                        // <-- Importa L
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-geosearch/dist/geosearch.css';
 
-// Control de búsqueda
+
+
+// custom icon (puedes cambiar la URL por la tuya)
+const pinIcon = new L.Icon({
+  iconUrl: "/marker-icon.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+});
+
+
 function SearchControl() {
   const map = useMap();
-  
+
   useEffect(() => {
     const provider = new OpenStreetMapProvider();
     const search = new GeoSearchControl({
       provider,
       style: 'bar',
-      showMarker: true,
+      showMarker: false,    // Ya no necesitamos el marcador por defecto
       showPopup: false,
       autoClose: true,
       retainZoomLevel: false,
       animateZoom: true,
     });
 
-    const onResult = async (e) => {
+    const onResult = (e) => {
       const { x: lon, y: lat, label } = e.location;
+
+      // 1) Centrar el mapa
       map.setView([lat, lon], 16);
 
-      try {
-        await sendCoordinates({ lon, lat, label });
-        console.log('Coordenadas enviadas ✔');
-      } catch (err) {
-        console.error(err);
-      }
+      // 2) Crear y abrir popup con lat/lon
+      L.popup({ closeOnClick: true, autoClose: true })
+       .setLatLng([lat, lon])
+       .setContent(`<strong>${label}</strong><br/>Lat: ${lat.toFixed(6)}<br/>Lon: ${lon.toFixed(6)}`)
+       .openOn(map);
+
+      // 3) (opcional) enviar a tu backend
+      // sendCoordinates({ lon, lat, label })
+      //   .then(() => console.log('Coordenadas enviadas ✔'))
+      //   .catch(console.error);
     };
 
     map.addControl(search);
     map.on('geosearch/showlocation', onResult);
 
-    return () => 
+    return () => {
       map.removeControl(search);
       map.off('geosearch/showlocation', onResult);
+    };
   }, [map]);
+
   return null;
 }
 

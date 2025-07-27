@@ -6,6 +6,7 @@ import "./Sidebar.css";
 export function Sidebar({onSelectHotel}) {
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [coords, setCoords] = useState(null);
 
 
   useEffect(() => {
