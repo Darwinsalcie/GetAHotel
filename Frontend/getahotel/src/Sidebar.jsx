@@ -1,37 +1,26 @@
+// src/Sidebar.jsx
 import { useEffect, useState } from "react";
 import { fetchHotelsAround } from "./services/hotelService";
 import { HotelSideBarCard } from "./HotelSideBarCard";
 import "./Sidebar.css";
 
-/**
- * Sidebar muestra una lista de hoteles alrededor de una coordenada dada.
- * @param {{ onSelectHotel: Function, lat: number, lon: number }} props
- */
-export function Sidebar({ onSelectHotel, lat, lon }) {
+export function Sidebar({ onSelectHotel, onFocusHotel, lat, lon }) {
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     if (lat == null || lon == null) {
-      // No se tienen coordenadas, limpiamos lista
       setHotels([]);
       return;
     }
-
     setLoading(true);
     setError(null);
-
     fetchHotelsAround({ radius: 3000, lat, lon })
-      .then((list) => setHotels(list))
-      .catch((err) => {
-        console.error(err);
-        setError('Error al cargar hoteles');
-      })
+      .then(setHotels)
+      .catch(() => setError("Error al cargar hoteles"))
       .finally(() => setLoading(false));
-  }, [lat, lon]);
-
-  const handleView = (hotel) => onSelectHotel(hotel);
+  }, [lat, lon]); // sigue dependiendo solo de la búsqueda
 
   return (
     <aside className="sidebar">
@@ -46,7 +35,11 @@ export function Sidebar({ onSelectHotel, lat, lon }) {
       <ul className="sidebar__list">
         {hotels.map((h) => (
           <li key={h.id} className="sidebar__item">
-            <HotelSideBarCard hotel={h} onView={() => handleView(h)} />
+            <HotelSideBarCard
+              hotel={h}
+              onFocus={() => onFocusHotel(h)}
+              onView={() => onSelectHotel(h)}
+            />
           </li>
         ))}
       </ul>
