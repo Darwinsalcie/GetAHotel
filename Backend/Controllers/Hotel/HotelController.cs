@@ -1,4 +1,5 @@
 ﻿using GetAHotel.Service.Location;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GetAHotel.Controllers.Barbershop;
