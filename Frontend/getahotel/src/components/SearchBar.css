@@ -1,0 +1,45 @@
+/* Estilos para corregir la barra de búsqueda */
+/* Agregar esto al CSS de tu componente de búsqueda */
+
+.search-clear-btn,
+.leaflet-control-geosearch .reset {
+  all: unset !important;
+  position: absolute !important;
+  right: 4px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 20px !important;
+  height: 20px !important;
+  background: none !important;
+  border: none !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 14px !important;
+  color: #666 !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.search-clear-btn:hover,
+.leaflet-control-geosearch .reset:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  color: #333 !important;
+}
+
+/* Asegurar que el input de búsqueda tenga el espacio correcto para el botón X */
+.leaflet-control-geosearch .glass {
+  padding-right: 28px !important;
+}
+
+/* Resetear cualquier estilo global que afecte a los controles de Leaflet */
+.leaflet-control-geosearch * {
+  box-sizing: border-box !important;
+}
+
+.leaflet-control-geosearch button {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+}

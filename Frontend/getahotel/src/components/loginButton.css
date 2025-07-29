@@ -1,43 +1,63 @@
 /* src/components/loginButton.css */
-/* Botón fijo arriba-derecha (sin cambios) */
+
+/* Botón fijo arriba-derecha */
 .login-btn {
-  position: fixed;
-  top: 20px;
-  right: 70px;
-  z-index: 2000;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  background: #007bff;
-  color: #fff;
-  cursor: pointer;
+  position: fixed !important;
+  top: 20px !important;
+  right: 70px !important;
+  z-index: 2000 !important;
+  padding: 6px 12px !important;
+  border: none !important;
+  border-radius: 4px !important;
+  background: #007bff !important;
+  color: #ffffff !important; /* Texto blanco */
+  cursor: pointer !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  transition: background-color 0.2s ease !important;
 }
 
-/* Overlay (fondo oscuro detrás) */
+.login-btn:hover {
+  background: #0056b3 !important;
+  border-color: transparent !important;
+}
+
+.login-btn:focus,
+.login-btn:focus-visible {
+  outline: 2px solid rgba(0, 123, 255, 0.5) !important;
+  outline-offset: 2px !important;
+}
+
+/* Overlay (fondo oscuro detrás) con glassmorphism */
 .login-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3000;            /* ↑ por encima de todo */
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 3000 !important;
 }
 
-/* Caja del modal */
+/* Caja del modal con glassmorphism mejorado */
 .login-modal {
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
-  padding: 1.5rem;
-  max-width: 360px;
-  width: 90%;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #111;
-  animation: fadeIn 0.2s ease-out;
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 16px !important;
+  padding: 2rem !important;
+  max-width: 400px !important;
+  width: 90% !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  color: #111 !important;
+  animation: fadeIn 0.3s ease-out !important;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
 }
 
 /* Pequeña animación */
@@ -53,9 +73,11 @@
 }
 
 .login-divider {
-  margin: 16px 0;
-  border: none;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  margin: 20px 0 16px 0 !important;
+  border: none !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
+  height: 1px !important;
 }
 
 .login-register-link {
@@ -64,74 +86,99 @@
   margin: 0;
 }
 
-
-/* ---------- NUEVOS ESTILOS (usuario logueado) ---------- */
+/* ---------- ESTILOS PARA USUARIO LOGUEADO ---------- */
 
 /* Botón-sustituto del login-btn cuando hay sesión */
 .user-btn {
-  position: fixed;
-  top: 20px;
-  right: 70px;
-  z-index: 2000;
+  position: fixed !important;
+  top: 20px !important;
+  right: 70px !important;
+  z-index: 2000 !important;
+  padding: 6px 12px !important;
+  border: none !important;
+  border-radius: 4px !important;
+  background: #28a745 !important; /* Verde para diferenciarlo */
+  color: #ffffff !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  font-weight: 500 !important;
+  transition: background-color 0.2s ease !important;
+  max-width: 150px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
 
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  background: #007bff;
-  color: #fff;
-  cursor: pointer;
-  font-size: 14px;
-  line-height: 1.2;
+.user-btn:hover {
+  background: #218838 !important;
 }
 
 /* Contenedor relativo para el dropdown */
 .user-menu {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  z-index: 2000;
+  position: fixed !important;
+  top: 20px !important;
+  right: 70px !important;
+  z-index: 2000 !important;
 }
 
-/* Dropdown oculto por defecto */
+/* Dropdown con glassmorphism mejorado */
 .user-menu .dropdown {
-  position: absolute;
-  top: calc(100% + 4px);
-  right: 0;
-  width: 110px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.15);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-6px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
-  z-index: 2100;
+  position: absolute !important;
+  top: calc(100% + 4px) !important;
+  right: 0 !important;
+  min-width: 120px !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(-6px) !important;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease !important;
+  z-index: 2100 !important;
 }
 
 /* Mostrar dropdown al hacer hover/focus */
 .user-menu:hover .dropdown,
 .user-menu:focus-within .dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
 }
 
 /* Botón dentro del dropdown */
 .dropdown button {
-  display: block;
-  width: 100%;
-  padding: 8px 12px;
-  background: none;
-  border: none;
-  text-align: left;
-  color: #111;
-  font-size: 14px;
-  cursor: pointer;
+  display: block !important;
+  width: 100% !important;
+  padding: 8px 12px !important;
+  background: none !important;
+  border: none !important;
+  text-align: left !important;
+  color: #111 !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  transition: background-color 0.15s ease !important;
+  border-radius: 0 !important;
 }
 
 .dropdown button:hover {
-  background: rgba(0, 123, 255, 0.08);
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #111 !important;
+}
+
+.dropdown button:first-child {
+  border-radius: 4px 4px 0 0 !important;
+}
+
+.dropdown button:last-child {
+  border-radius: 0 0 4px 4px !important;
+}
+
+.dropdown button:only-child {
+  border-radius: 4px !important;
 }

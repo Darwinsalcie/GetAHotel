@@ -75,8 +75,8 @@ namespace GetAHotel.Controllers.SavedLocations
                 {
                     Id = l.Id,
                     LocationName = l.LocationName,
-                    Latitude = l.Latitude,
-                    Longitude = l.Longitude
+                    Latitude = (double)l.Latitude,
+                    Longitude = (double)l.Longitude
                 })
                 .FirstOrDefaultAsync();
 

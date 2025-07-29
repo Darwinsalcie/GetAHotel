@@ -1,10 +1,12 @@
 // src/components/MapWithSearch.jsx
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'leaflet-geosearch/dist/geosearch.css';
+import './SearchBar.css';
 
 import DefaultIcon from './DefaultIcon';
+import { createSavedLocation } from '../services/savedLocationService';
 
 function SearchControl({ onResult }) {
   const map = useMap();
@@ -14,7 +16,7 @@ function SearchControl({ onResult }) {
     const control = new GeoSearchControl({
       provider,
       style: 'bar',
-      showMarker: false
+      showMarker: false,
     });
     map.addControl(control);
     map.on('geosearch/showlocation', (e) => {
@@ -33,32 +35,55 @@ function SearchControl({ onResult }) {
 function Recenter({ position }) {
   const map = useMap();
   useEffect(() => {
-    if (position) {
-      map.flyTo([position.lat, position.lon], 16, { duration: 0.5 });
-    }
+    if (position) map.flyTo([position.lat, position.lon], 16, { duration: 0.5 });
   }, [map, position]);
   return null;
 }
 
 export default function MapWithSearch({ position, onPositionChange }) {
+  const [name, setName] = useState('');
+
+  const handleSave = async () => {
+    const trimmed = name.trim();
+
+    try {
+      await createSavedLocation({
+        locationName: trimmed,
+        latitude: position.lat,
+        longitude: position.lon,
+      });
+      setName('');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <DefaultIcon />
-
       <MapContainer
         center={[18.4707478, -69.9168466]}
         zoom={13}
         style={{ height: '100vh', width: '100%' }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-
         <SearchControl onResult={onPositionChange} />
-
         <Recenter position={position} />
 
         {position && (
           <Marker position={[position.lat, position.lon]}>
-            <Popup>Ubicación seleccionada</Popup>
+            <Popup>
+              <div className="save-popup">
+                <p>Guarda esta ubicación:</p>
+                <input
+                  type="text"
+                  placeholder="Nombre de la ubicación"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <button onClick={handleSave}>Guardar</button>
+              </div>
+            </Popup>
           </Marker>
         )}
       </MapContainer>

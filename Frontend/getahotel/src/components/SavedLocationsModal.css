@@ -4,7 +4,6 @@
   bottom: 20px;
   right: 20px;
   z-index: 1500;
-
   width: 44px;
   height: 44px;
   border: none;
@@ -22,12 +21,12 @@
 
 .saved-locations__panel {
   position: fixed;
-  bottom: 74px; /* justo encima del botón */
+  bottom: 74px;
   right: 20px;
   z-index: 1500;
-
   width: 240px;
   max-height: 300px;
+  overflow: visible; /* permitimos overflow para el menú */
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -36,7 +35,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .saved-locations__header {
@@ -61,11 +59,18 @@
   color: #555;
 }
 
+/* Wrapper con scroll */
+.saved-locations__list-wrapper {
+  flex: 1;
+  max-height: 240px; /* ajusta según header/mensajes */
+  overflow-y: auto;
+}
+
+/* Lista sin scroll */
 .saved-locations__list {
   list-style: none;
   margin: 0;
   padding: 0;
-  overflow-y: auto;
 }
 
 .saved-locations__item {
@@ -79,4 +84,109 @@
 }
 .saved-locations__item:hover {
   background: rgba(0, 123, 255, 0.08);
+}
+
+/* Fila */
+.saved-locations__row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 4px;
+}
+
+/* Botón de tres puntos */
+.saved-locations__menu-dots {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #555;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.saved-locations__menu-dots:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* SOLUCIÓN: Menú con z-index más alto y mejor posicionamiento */
+.saved-locations__menu {
+  position: fixed;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  z-index: 9999; /* Z-index muy alto para estar sobre todo */
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0;
+  border-radius: 6px;
+  min-width: 80px;
+  /* Evitar que se corte en los bordes de la pantalla */
+  transform: translateX(-50%);
+}
+
+/* Alternativa: Si el menú se sale de la pantalla, ajustarlo */
+.saved-locations__menu--adjust-left {
+  transform: translateX(-100%);
+}
+
+.saved-locations__menu button {
+  padding: 8px 12px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.15s;
+  white-space: nowrap;
+}
+.saved-locations__menu button:hover {
+  background-color: #f5f5f5;
+}
+
+.saved-locations__menu button:first-child {
+  border-radius: 6px 6px 0 0;
+}
+.saved-locations__menu button:last-child {
+  border-radius: 0 0 6px 6px;
+}
+
+/* Estilos edición inline */
+.saved-locations__edit-row {
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px;
+}
+.saved-locations__edit-input {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.saved-locations__save-btn,
+.saved-locations__cancel-btn {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.saved-locations__save-btn {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+.saved-locations__save-btn:hover {
+  background-color: #0056b3;
+}
+.saved-locations__cancel-btn {
+  background-color: #6c757d;
+  color: white;
+  border-color: #6c757d;
+}
+.saved-locations__cancel-btn:hover {
+  background-color: #545b62;
 }

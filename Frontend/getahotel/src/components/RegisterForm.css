@@ -1,11 +1,11 @@
-/* src/components/LoginForm.css */
-.login-form {
+/* src/components/RegisterForm.css */
+.register-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.login-title {
+.register-title {
   margin: 0 0 8px 0;
   font-size: 1.4rem;
   font-weight: 600;
@@ -14,7 +14,7 @@
   letter-spacing: -0.025em;
 }
 
-.login-label {
+.register-label {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -23,7 +23,7 @@
   color: #333;
 }
 
-.login-input {
+.register-input {
   width: 100%;
   padding: 12px 16px;
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -38,22 +38,22 @@
   color: #333;
 }
 
-.login-input:focus {
+.register-input:focus {
   outline: none;
-  border-color: rgba(0, 123, 255, 0.6);
+  border-color: rgba(40, 167, 69, 0.6);
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 
-    0 0 0 3px rgba(0, 123, 255, 0.1),
-    0 4px 12px rgba(0, 123, 255, 0.1);
+    0 0 0 3px rgba(40, 167, 69, 0.1),
+    0 4px 12px rgba(40, 167, 69, 0.1);
   transform: translateY(-1px);
 }
 
-.login-input::placeholder {
+.register-input::placeholder {
   color: #888;
   font-size: 0.9rem;
 }
 
-.login-error {
+.register-error {
   color: #ff6b6b;
   font-size: 0.85rem;
   margin: 0;
@@ -66,11 +66,24 @@
   box-shadow: 0 4px 12px rgba(255, 107, 107, 0.1);
 }
 
-.login-submit {
+.register-success {
+  color: #51cf66;
+  font-size: 0.85rem;
+  margin: 0;
+  padding: 12px 16px;
+  background: rgba(81, 207, 102, 0.1);
+  border: 1px solid rgba(81, 207, 102, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(81, 207, 102, 0.1);
+}
+
+.register-submit {
   padding: 14px 20px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  background: linear-gradient(135deg, #28a745 0%, #218838 100%);
   color: #fff;
   font-size: 0.95rem;
   font-weight: 600;
@@ -78,13 +91,13 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 
-    0 4px 15px rgba(0, 123, 255, 0.3),
+    0 4px 15px rgba(40, 167, 69, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.1) inset;
   position: relative;
   overflow: hidden;
 }
 
-.login-submit::before {
+.register-submit::before {
   content: '';
   position: absolute;
   top: 0;
@@ -95,38 +108,38 @@
   transition: left 0.5s ease;
 }
 
-.login-submit:hover:not(:disabled) {
-  background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+.register-submit:hover:not(:disabled) {
+  background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
   transform: translateY(-2px);
   box-shadow: 
-    0 8px 25px rgba(0, 123, 255, 0.4),
+    0 8px 25px rgba(40, 167, 69, 0.4),
     0 0 0 1px rgba(255, 255, 255, 0.2) inset;
 }
 
-.login-submit:hover:not(:disabled)::before {
+.register-submit:hover:not(:disabled)::before {
   left: 100%;
 }
 
-.login-submit:active:not(:disabled) {
+.register-submit:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+  box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2);
 }
 
-.login-submit:disabled {
+.register-submit:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
-  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.1);
+  box-shadow: 0 2px 4px rgba(40, 167, 69, 0.1);
 }
 
-.login-register-link {
+.register-login-link {
   font-size: 0.875rem;
   text-align: center;
   margin: 8px 0 0 0;
   color: #555;
 }
 
-.login-register-link button {
+.register-login-link button {
   background: none;
   border: none;
   color: #007bff;
@@ -139,23 +152,23 @@
   transition: color 0.2s ease;
 }
 
-.login-register-link button:hover {
+.register-login-link button:hover {
   color: #0056b3;
 }
 
-.login-register-link button:focus {
+.register-login-link button:focus {
   outline: 2px solid rgba(0, 123, 255, 0.3);
   outline-offset: 2px;
   border-radius: 2px;
 }
 
 /* Animación de carga */
-.login-submit.loading {
+.register-submit.loading {
   position: relative;
   color: transparent;
 }
 
-.login-submit.loading::after {
+.register-submit.loading::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -172,4 +185,23 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Validación visual de contraseña */
+.password-strength {
+  font-size: 0.8rem;
+  margin-top: 4px;
+  color: #666;
+}
+
+.password-strength.weak {
+  color: #dc3545;
+}
+
+.password-strength.medium {
+  color: #ffc107;
+}
+
+.password-strength.strong {
+  color: #28a745;
 }
