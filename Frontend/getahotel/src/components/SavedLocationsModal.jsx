@@ -32,8 +32,8 @@ function ContextMenu({ isOpen, position, currentLoc, onEdit, onDelete, onClose }
         left: `${position.x}px`,
       }}
     >
-      <button onClick={() => onEdit(currentLoc)}>Editar</button>
-      <button onClick={() => onDelete(currentLoc.id)}>Eliminar</button>
+      <button onClick={e => { e.stopPropagation(); onEdit(currentLoc); }}>Editar</button>
+      <button onClick={e => { e.stopPropagation(); onDelete(currentLoc.id); }}>Eliminar</button>
     </div>,
     document.body // Renderizar directamente en body
   );
@@ -70,17 +70,21 @@ export default function SavedLocationsModal({ onSelectLocation }) {
     }
   };
 
+  // Listener para cerrar modal y menú contextual al hacer click fuera
   useEffect(() => {
     if (!open) return;
     const handleClickOutside = (e) => {
+      // si el clic está dentro del panel, el botón disparador, o el menú, no cerrar
       if (
-        !panelRef.current?.contains(e.target) &&
-        !triggerRef.current?.contains(e.target)
+        panelRef.current?.contains(e.target) ||
+        triggerRef.current?.contains(e.target) ||
+        e.target.closest('.saved-locations__menu')
       ) {
-        setOpen(false);
-        setMenuOpen(false);
-        setEditingId(null);
+        return;
       }
+      setOpen(false);
+      setMenuOpen(false);
+      setEditingId(null);
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
