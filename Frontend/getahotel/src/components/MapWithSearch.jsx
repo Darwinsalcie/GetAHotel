@@ -40,6 +40,23 @@ function Recenter({ position }) {
   return null;
 }
 
+// Escucha clicks en el mapa para actualizar posición
+function ClickHandler({ onMapClick }) {
+  useMap()
+  const map = useMap();
+  useEffect(() => {
+    const handler = (e) => {
+      const { lat, lng } = e.latlng;
+      onMapClick({ lat, lon: lng });
+    };
+    map.on('click', handler);
+    return () => {
+      map.off('click', handler);
+    };
+  }, [map, onMapClick]);
+  return null;
+}
+
 export default function MapWithSearch({ position, onPositionChange }) {
   const [name, setName] = useState('');
 
@@ -68,10 +85,10 @@ export default function MapWithSearch({ position, onPositionChange }) {
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <SearchControl onResult={onPositionChange} />
         <Recenter position={position} />
+        <ClickHandler onMapClick={onPositionChange} />
 
         {position && (
           <Marker position={[position.lat, position.lon]}>
-            {/* Mostrar el popup de guardado solo si hay usuario autenticado */}
             {isAuthenticated() && (
               <Popup>
                 <div className="save-popup">
