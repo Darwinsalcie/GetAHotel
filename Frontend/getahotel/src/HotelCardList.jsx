@@ -8,7 +8,7 @@ export function HotelCardList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchHotelsAround({ radius: 3000, lat: 18.4707478, lon: -69.9168466 })
+    fetchHotelsAround({ radius: 5000, lat: 18.4707478, lon: -69.9168466 })
       .then(setHotels)
       .catch(console.error)
       .finally(() => setLoading(false));

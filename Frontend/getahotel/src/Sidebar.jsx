@@ -16,7 +16,7 @@ export function Sidebar({ onSelectHotel, onFocusHotel, lat, lon }) {
     }
     setLoading(true);
     setError(null);
-    fetchHotelsAround({ radius: 3000, lat, lon })
+    fetchHotelsAround({ radius: 5000, lat, lon })
       .then(setHotels)
       .catch(() => setError("Error al cargar hoteles"))
       .finally(() => setLoading(false));

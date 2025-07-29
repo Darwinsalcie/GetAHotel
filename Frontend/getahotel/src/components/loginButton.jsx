@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import LoginForm from './LoginForm';
+import LoginForm from './loginForm';
 import RegisterForm from './RegisterForm';
 import './loginButton.css';
 

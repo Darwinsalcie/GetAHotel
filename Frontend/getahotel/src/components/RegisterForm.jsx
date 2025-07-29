@@ -1,9 +1,9 @@
 // src/components/RegisterForm.jsx
 import { useState } from 'react';
-import { registerUser } from '../services/AuthService';
+import { registerUser } from '../services/authService';
 import './RegisterForm.css';
 
-export default function RegisterForm({ onSuccess, onSwitchToLogin }) {
+export default function RegisterForm({ onSwitchToLogin }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,7 +11,6 @@ export default function RegisterForm({ onSuccess, onSwitchToLogin }) {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,10 +29,10 @@ export default function RegisterForm({ onSuccess, onSwitchToLogin }) {
 
   const getPasswordStrengthText = (strength) => {
     switch (strength) {
-      case 'weak': return 'Contraseña débil (mínimo 6 caracteres)';
+      case 'weak':   return 'Contraseña débil (mínimo 6 caracteres)';
       case 'medium': return 'Contraseña media';
       case 'strong': return 'Contraseña fuerte';
-      default: return '';
+      default:       return '';
     }
   };
 
@@ -41,7 +40,6 @@ export default function RegisterForm({ onSuccess, onSwitchToLogin }) {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setSuccess('');
 
     // Validaciones básicas
     if (formData.name.trim().length < 2) {
@@ -49,7 +47,6 @@ export default function RegisterForm({ onSuccess, onSwitchToLogin }) {
       setLoading(false);
       return;
     }
-
     if (formData.password.length < 6) {
       setError('La contraseña debe tener al menos 6 caracteres');
       setLoading(false);
@@ -57,14 +54,13 @@ export default function RegisterForm({ onSuccess, onSwitchToLogin }) {
     }
 
     try {
-      await registerUser(formData);
-      setSuccess('¡Registro exitoso! Redirigiendo...');
-      
-      // Redirigir después de 2 segundos
-      setTimeout(() => {
-        onSuccess();
-      }, 2000);
-      
+      await registerUser({
+        name: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        password: formData.password
+      });
+      // ¡Registro ok! Volvemos al login en el mismo modal
+      onSwitchToLogin();
     } catch (err) {
       setError(err.response?.data?.message || 'Error al crear la cuenta');
     } finally {
@@ -72,7 +68,9 @@ export default function RegisterForm({ onSuccess, onSwitchToLogin }) {
     }
   };
 
-  const passwordStrength = formData.password ? getPasswordStrength(formData.password) : null;
+  const strength = formData.password
+    ? getPasswordStrength(formData.password)
+    : null;
 
   return (
     <form className="register-form" onSubmit={handleSubmit}>
@@ -115,22 +113,21 @@ export default function RegisterForm({ onSuccess, onSwitchToLogin }) {
           placeholder="Mínimo 6 caracteres"
           required
         />
-        {passwordStrength && (
-          <div className={`password-strength ${passwordStrength}`}>
-            {getPasswordStrengthText(passwordStrength)}
+        {strength && (
+          <div className={`password-strength ${strength}`}>
+            {getPasswordStrengthText(strength)}
           </div>
         )}
       </label>
       
       {error && <p className="register-error">{error}</p>}
-      {success && <p className="register-success">{success}</p>}
       
-      <button 
-        className={`register-submit ${loading ? 'loading' : ''}`} 
-        type="submit" 
-        disabled={loading || success}
+      <button
+        className={`register-submit ${loading ? 'loading' : ''}`}
+        type="submit"
+        disabled={loading}
       >
-        {loading ? '' : success ? 'Redirigiendo...' : 'Crear cuenta'}
+        {loading ? '' : 'Crear cuenta'}
       </button>
       
       <p className="register-login-link">

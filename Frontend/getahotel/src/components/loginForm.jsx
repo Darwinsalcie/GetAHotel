@@ -70,7 +70,7 @@ export default function LoginForm({ onSuccess, onSwitchToRegister }) {
       </button>
       
       <p className="login-register-link">
-        ¿No tenés cuenta?{' '}
+        ¿No tienes cuenta?{' '}
         <button type="button" onClick={onSwitchToRegister}>
           Registrate aquí
         </button>

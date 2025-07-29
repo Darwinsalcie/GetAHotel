@@ -1,4 +1,3 @@
-// src/components/MapWithSearch.jsx
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { useEffect, useState } from 'react';
@@ -7,6 +6,7 @@ import './SearchBar.css';
 
 import DefaultIcon from './DefaultIcon';
 import { createSavedLocation } from '../services/savedLocationService';
+import { isAuthenticated } from '../services/authService';
 
 function SearchControl({ onResult }) {
   const map = useMap();
@@ -45,7 +45,6 @@ export default function MapWithSearch({ position, onPositionChange }) {
 
   const handleSave = async () => {
     const trimmed = name.trim();
-
     try {
       await createSavedLocation({
         locationName: trimmed,
@@ -72,18 +71,21 @@ export default function MapWithSearch({ position, onPositionChange }) {
 
         {position && (
           <Marker position={[position.lat, position.lon]}>
-            <Popup>
-              <div className="save-popup">
-                <p>Guarda esta ubicación:</p>
-                <input
-                  type="text"
-                  placeholder="Nombre de la ubicación"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                <button onClick={handleSave}>Guardar</button>
-              </div>
-            </Popup>
+            {/* Mostrar el popup de guardado solo si hay usuario autenticado */}
+            {isAuthenticated() && (
+              <Popup>
+                <div className="save-popup">
+                  <p>Guarda esta ubicación:</p>
+                  <input
+                    type="text"
+                    placeholder="Nombre de la ubicación"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <button onClick={handleSave}>Guardar</button>
+                </div>
+              </Popup>
+            )}
           </Marker>
         )}
       </MapContainer>
