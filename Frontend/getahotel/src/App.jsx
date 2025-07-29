@@ -1,36 +1,40 @@
-// src/App.jsx
 import { useState } from 'react';
+import LoginButton from './components/loginButton';
+import SavedLocationsModal from './components/SavedLocationsModal';
 import MapWithSearch from './components/MapWithSearch';
 import { HotelCard } from './HotelCard';
 import { Sidebar } from './Sidebar';
 import './App.css';
 
 export default function App() {
-  // posición que viene de la barra (search)…
   const [searchPosition, setSearchPosition] = useState(null);
-  // …y posición que viene del foco (hotel)
   const [focusPosition, setFocusPosition] = useState(null);
   const [selectedHotel, setSelectedHotel] = useState(null);
+  const [isLogged, setIsLogged] = useState(() => !!localStorage.getItem('token'));
 
-  // dispara SOLO al buscar en la barra
+  const handleAuthChange = () => setIsLogged(!!localStorage.getItem('token'));
+
   const handleSearch = ({ lat, lon }) => {
     setSearchPosition({ lat, lon });
-    // limpiamos foco si había uno
     setFocusPosition(null);
   };
 
-  // dispara SOLO al hacer clic en un hotel
-  const handleFocusHotel = hotel => {
+  const handleFocusHotel = (hotel) =>
     setFocusPosition({ lat: hotel.latitude, lon: hotel.longitude });
+
+  const handleSelectSaved = ({ lat, lon }) => {
+    setSearchPosition({ lat, lon });
+    setFocusPosition(null);
   };
 
-  // decide qué posición pasa al mapa:
-  // — si hay foco (clic hotel), usamos esa  
-  // — si no, usamos la última búsqueda
   const mapPosition = focusPosition || searchPosition;
 
   return (
     <div className="app">
+      <LoginButton onAuthChange={handleAuthChange} />
+
+      {isLogged && <SavedLocationsModal onSelectLocation={handleSelectSaved} />}
+
       <Sidebar
         lat={searchPosition?.lat}
         lon={searchPosition?.lon}
@@ -45,10 +49,7 @@ export default function App() {
 
       {selectedHotel && (
         <div className="overlay">
-          <HotelCard
-            hotel={selectedHotel}
-            onClose={() => setSelectedHotel(null)}
-          />
+          <HotelCard hotel={selectedHotel} onClose={() => setSelectedHotel(null)} />
         </div>
       )}
     </div>

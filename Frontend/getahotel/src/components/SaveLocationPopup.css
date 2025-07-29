@@ -1,0 +1,36 @@
+/* src/components/SaveLocationPopup.css */
+.save-popup__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+}
+.save-popup__card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 280px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+.save-popup__card h4 { margin: 0 0 0.5rem; }
+.save-popup__card input {
+  width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 0.4rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+.save-popup__actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+.save-popup__actions button {
+  padding: 0.35rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

@@ -49,18 +49,29 @@ namespace GetAHotel.Controllers.OAuth2
 
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto logindto)
+        public async Task<IActionResult> Login(LoginDto dto)
         {
-            var user = await _context.AspNetUsers.FirstOrDefaultAsync(u => u.Email == logindto.Email);
-            if (user == null)
-                return Unauthorized("Credenciales Inválidas");
+            var user = await _context.AspNetUsers
+                           .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
-            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, logindto.Password);
-            if (result != PasswordVerificationResult.Success)
+            if (user == null ||
+                _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password)
+                != PasswordVerificationResult.Success)
+            {
                 return Unauthorized("Credenciales Inválidas");
+            }
 
             var token = GenerateJwtToken(user);
-            return Ok(new { token });
+
+            return Ok(new
+            {
+                token,
+                user = new
+                {
+                    id = user.Id,
+                    name = user.UserName   // o user.Email si preferís
+                }
+            });
         }
 
         private string GenerateJwtToken(AspNetUser user)

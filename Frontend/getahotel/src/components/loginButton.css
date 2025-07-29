@@ -1,0 +1,137 @@
+/* src/components/loginButton.css */
+/* Botón fijo arriba-derecha (sin cambios) */
+.login-btn {
+  position: fixed;
+  top: 20px;
+  right: 70px;
+  z-index: 2000;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Overlay (fondo oscuro detrás) */
+.login-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;            /* ↑ por encima de todo */
+}
+
+/* Caja del modal */
+.login-modal {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-width: 360px;
+  width: 90%;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #111;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Pequeña animación */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.login-divider {
+  margin: 16px 0;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.login-register-link {
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 0;
+}
+
+
+/* ---------- NUEVOS ESTILOS (usuario logueado) ---------- */
+
+/* Botón-sustituto del login-btn cuando hay sesión */
+.user-btn {
+  position: fixed;
+  top: 20px;
+  right: 70px;
+  z-index: 2000;
+
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* Contenedor relativo para el dropdown */
+.user-menu {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 2000;
+}
+
+/* Dropdown oculto por defecto */
+.user-menu .dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  width: 110px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 2100;
+}
+
+/* Mostrar dropdown al hacer hover/focus */
+.user-menu:hover .dropdown,
+.user-menu:focus-within .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Botón dentro del dropdown */
+.dropdown button {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  text-align: left;
+  color: #111;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown button:hover {
+  background: rgba(0, 123, 255, 0.08);
+}

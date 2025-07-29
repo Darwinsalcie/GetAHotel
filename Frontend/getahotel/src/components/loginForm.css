@@ -1,0 +1,46 @@
+/* src/components/LoginForm.css */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-title {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.login-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+}
+
+.login-input {
+  width: 100%;
+  padding: 4px;
+  margin-top: 2px;
+  box-sizing: border-box;
+}
+
+.login-error {
+  color: #c53030;
+  font-size: 0.875rem;
+  margin: 8px 0 0;
+}
+
+.login-submit {
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.login-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
