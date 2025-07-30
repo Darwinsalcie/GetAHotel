@@ -51,7 +51,7 @@
   gap: 0.75rem !important;
 }
 
-/* TARJETA SENCILLA */
+/* TARJETA CON DISTANCIA */
 .sidebar-card {
   display: flex !important;
   align-items: center !important;
@@ -71,13 +71,42 @@
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1) !important;
 }
 
+/* Contenedor para nombre y distancia */
+.sidebar-card__content {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.25rem !important;
+  min-width: 0 !important; /* Para permitir que el texto se trunque */
+}
+
 .sidebar-card__name {
   font-size: 0.95rem !important;
   font-weight: 400 !important;
   color: #222 !important;
   letter-spacing: 0.25px !important;
-  flex: 1 !important;
   text-align: left !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  cursor: pointer !important;
+}
+
+.sidebar-card__name:hover {
+  color: #0066cc !important;
+}
+
+/* Estilo para la distancia */
+.sidebar-card__distance {
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  color: #666 !important;
+  background: rgba(0, 123, 255, 0.1) !important;
+  padding: 0.15rem 0.4rem !important;
+  border-radius: 12px !important;
+  display: inline-block !important;
+  align-self: flex-start !important;
+  border: 1px solid rgba(0, 123, 255, 0.2) !important;
 }
 
 .sidebar-card__btn {
@@ -96,6 +125,7 @@
   align-items: center !important;
   justify-content: center !important;
   padding: 0 !important;
+  margin-left: 0.5rem !important;
 }
 
 .sidebar-card__btn:hover {

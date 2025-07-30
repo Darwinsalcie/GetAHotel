@@ -1,7 +1,11 @@
-﻿using GetAHotel.DTO;
+﻿using Azure.Core.GeoJson;
+using GetAHotel.DTO;
 using System.Collections.Generic;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;
+using GetAHotel.Models.Extensions;
+using GetAHotel.Models;
+
 
 namespace GetAHotel.Service.Location
 {
@@ -10,6 +14,7 @@ namespace GetAHotel.Service.Location
 
         public async Task<string> GetLocationAroundAsync(int radious, double lat, double lon)
         {
+
 
             string query = $@"
             [out:json][timeout:25];
@@ -23,29 +28,38 @@ namespace GetAHotel.Service.Location
             {
                 var overPassResponse = JsonSerializer.Deserialize<OverPassResponse>(jsonResponse);
 
-         
+                var origen = new GeoPointModel(lat, lon);
+
 
                 HotelDTO[] hotels = overPassResponse.elements
-                        .Where(e => 
+                    .Where(e =>
                         e.id != 0 &&
                         e.lat != 0 &&
                         e.lon != 0 &&
-                        e.tags.TryGetValue("name", out var name) 
+                        e.tags.TryGetValue("name", out var name)
                         && !string.IsNullOrWhiteSpace(name))
-                    .Select(e => new HotelDTO
+                    .Select(e =>
                     {
-                        Id = e.id,
-                        Name = e.tags.ContainsKey("name") ? e.tags["name"] : "Unknown",
-                        Latitude = e.lat,
-                        Longitude = e.lon,
-                        houseNumber = e.tags.ContainsKey("addr:housenumber") ? e.tags["addr:housenumber"] : null,
-                        PhoneNumber = e.tags.ContainsKey("contact:phone") ? (e.tags["contact:phone"]) : 
-                                      e.tags.ContainsKey("phone")? e.tags["phone"] : null,
-                        Street = e.tags.ContainsKey("addr:street") ? e.tags["addr:street"] : null,
-                        Address = e.tags.ContainsKey("addr:full") ? e.tags["addr:full"] : null,
-                        City = e.tags.ContainsKey("addr:city") ? e.tags["addr:city"] : null,
-                        Website = e.tags.ContainsKey("website") ? e.tags["website"] : null
+                        var hotelLocation = new GeoPointModel(e.lat, e.lon);
+                        var distancia = origen.DistanciaHaversineA(hotelLocation);
+
+                        return new HotelDTO
+                        {
+                            Id = e.id,
+                            Name = e.tags.ContainsKey("name") ? e.tags["name"] : "Unknown",
+                            Latitude = e.lat,
+                            Longitude = e.lon,
+                            houseNumber = e.tags.ContainsKey("addr:housenumber") ? e.tags["addr:housenumber"] : null,
+                            PhoneNumber = e.tags.ContainsKey("contact:phone") ? e.tags["contact:phone"] :
+                                          e.tags.ContainsKey("phone") ? e.tags["phone"] : null,
+                            Street = e.tags.ContainsKey("addr:street") ? e.tags["addr:street"] : null,
+                            Address = e.tags.ContainsKey("addr:full") ? e.tags["addr:full"] : null,
+                            City = e.tags.ContainsKey("addr:city") ? e.tags["addr:city"] : null,
+                            Website = e.tags.ContainsKey("website") ? e.tags["website"] : null,
+                            DistanciaEnKm = Math.Round(distancia, 2) // Redondeado a 2 decimales
+                        };
                     })
+                    .OrderBy(h => h.DistanciaEnKm) // Ordenar por distancia ascendente
                     .ToArray();
 
                 var options = new JsonSerializerOptions
@@ -57,7 +71,6 @@ namespace GetAHotel.Service.Location
 
                 return JsonSerializer.Serialize(hotels, options);
             }
-
             catch (JsonException e)
             {
                 // Manejar errores de deserialización
