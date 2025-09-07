@@ -86,7 +86,10 @@ POST /api/user/locations - Agregar ubicación
 **Darwin Salcié** - [GitHub](https://github.com/Darwinsalcie)
 
 ScreenShoots:
-<img width="1449" height="688" alt="image" src="https://github.com/user-attachments/assets/363cd4cd-5845-4c90-8ae2-e573a81f2a1a" />
+<img width="1449/2" height="688/2" alt="image" src="https://github.com/user-attachments/assets/363cd4cd-5845-4c90-8ae2-e573a81f2a1a" />
+<img width="1616/2" height="762/2" alt="image" src="https://github.com/user-attachments/assets/98f0f527-43a4-4dd5-9263-cb0d6e0cf148" />
+<img width="1605/2" height="780/2" alt="image" src="https://github.com/user-attachments/assets/8a389c03-7eff-4b17-a89d-a4fc40d8940a" />
+<img width="1397/2" height="681/2" alt="image" src="https://github.com/user-attachments/assets/f622526c-8a25-40f9-9055-fe2e97632207" />
 
 
 ---
